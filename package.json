@@ -1,7 +1,7 @@
 {
   "name": "redocup",
   "version": "0.0.1",
-  "description": "Simple way to serve OpenAPI/Swagger-generated API reference dcumentation with ReDoc.",
+  "description": "Simple way to serve OpenAPI/Swagger-generated API reference documentation with ReDoc.",
   "main": "bin/redocup.js",
   "bin": {
     "redocup": "bin/redocup.js"
