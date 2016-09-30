@@ -10,7 +10,7 @@ const yaml = require('js-yaml');
 function main() {
   program
     .description('Simple way to serve OpenAPI/Swagger-generated API reference documentation with ReDoc.')
-    .version('0.0.1')
+    .version('0.1.0')
     .usage('[options] spec-json-or-yaml-path')
     .option('-p, --port [value]', 'port on which the server will listen (default 5000)')
     .parse(process.argv);

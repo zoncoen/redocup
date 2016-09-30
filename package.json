@@ -1,6 +1,6 @@
 {
   "name": "redocup",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Simple way to serve OpenAPI/Swagger-generated API reference documentation with ReDoc.",
   "main": "bin/redocup.js",
   "bin": {
@@ -26,6 +26,14 @@
     "url": "http://github.com/zoncoen"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zoncoen/redocup"
+  },
+  "homepage": "https://github.com/zoncoen/redocup",
+  "bugs": {
+    "url": "https://github.com/zoncoen/redocup/issues"
+  },
   "dependencies": {
     "commander": "^2.9.0",
     "express": "^4.14.0",
