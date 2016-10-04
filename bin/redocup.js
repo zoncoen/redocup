@@ -2,6 +2,8 @@
 
 'use strict';
 
+const browserSync = require('browser-sync');
+const ejs = require('ejs');
 const express = require('express');
 const fs = require('fs');
 const program = require('commander');
@@ -14,6 +16,7 @@ function main() {
     .version(pkg.version)
     .usage('[options] spec-json-or-yaml-path')
     .option('-p, --port [value]', 'port on which the server will listen (default 5000)')
+    .option('-w, --watch', 'reloding browser on spec file changes')
     .parse(process.argv);
 
   checkArgs(program);
@@ -29,26 +32,46 @@ function checkArgs(program) {
 
 function startServer(program) {
   const app = express();
-  const spec = loadSpec(program.args[0]);
-  const html = loadHTML();
+  const html = loadHTML(program);
   const port = program.port || 5000;
 
   app.use('/assets/redoc', express.static(__dirname + '/../node_modules/redoc/dist'))
 
   app.get('/spec.json', function (req, res) {
+    const spec = loadSpec(program.args[0]);
     res.send(spec);
   });
   app.get('*', function (req, res) {
     res.send(html);
   });
 
-  app.listen(port, function () {
-    console.log(`Server listening on port ${port}!`);
-  })
-  .on('error', function(e) {
-    console.error('failed to start server: ' + e.message);
-    process.exit(1);
-  });
+  if (program.watch) {
+    app.listen(port + 1, function () {
+      const bs = browserSync.create();
+      bs.init({
+        files: program.args,
+        proxy: `http://localhost:${port+1}`,
+        port,
+        logLevel: 'silent',
+        open: false,
+      }, function() {
+        console.log(`Server listening on port ${port}!`);
+      });
+    })
+    .on('error', function(e) {
+      console.error('failed to start server: ' + e.message);
+      process.exit(1);
+    });
+  }
+  else {
+    app.listen(port, function () {
+      console.log(`Server listening on port ${port}!`);
+    })
+    .on('error', function(e) {
+      console.error('failed to start server: ' + e.message);
+      process.exit(1);
+    });
+  }
 }
 
 function loadSpec(path) {
@@ -82,10 +105,11 @@ function loadSpec(path) {
   return json;
 }
 
-function loadHTML(path) {
+function loadHTML(program) {
   let html;
     try {
-      html = fs.readFileSync(__dirname + '/../assets/index.html', 'utf8');
+      const template = fs.readFileSync(__dirname + '/../templates/index.html', 'utf8');
+      html = ejs.render(template, {spec: program.args[0]});
     }
     catch (e) {
       console.error('failed to load html file: ' + e.message);
