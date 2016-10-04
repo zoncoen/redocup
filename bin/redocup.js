@@ -8,9 +8,10 @@ const program = require('commander');
 const yaml = require('js-yaml');
 
 function main() {
+  const pkg = JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8'));
   program
     .description('Simple way to serve OpenAPI/Swagger-generated API reference documentation with ReDoc.')
-    .version('0.1.0')
+    .version(pkg.version)
     .usage('[options] spec-json-or-yaml-path')
     .option('-p, --port [value]', 'port on which the server will listen (default 5000)')
     .parse(process.argv);
