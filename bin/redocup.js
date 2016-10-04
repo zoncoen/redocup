@@ -83,14 +83,12 @@ function loadSpec(path) {
     }
     catch (e) {
       console.error('failed to load spec yaml: ' + e.message);
-      process.exit(1);
     }
     try {
       json = JSON.stringify(yml);
     }
     catch (e) {
       console.error('failed to convert yaml to json: ' + e.message);
-      process.exit(1);
     }
   }
   else {
@@ -99,7 +97,6 @@ function loadSpec(path) {
     }
     catch (e) {
       console.error('failed to load spec json: ' + e.message);
-      process.exit(1);
     }
   }
   return json;
