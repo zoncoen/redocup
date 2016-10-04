@@ -35,7 +35,9 @@
     "url": "https://github.com/zoncoen/redocup/issues"
   },
   "dependencies": {
+    "browser-sync": "^2.17.0",
     "commander": "^2.9.0",
+    "ejs": "^2.5.2",
     "express": "^4.14.0",
     "js-yaml": "^3.6.1",
     "redoc": "^1.3.3"
