@@ -1,0 +1,7 @@
+{
+  extends: ["airbnb", "plugin:node/recommended"],
+  plugins: ["node"],
+  env: {
+    node: true
+  }
+}
